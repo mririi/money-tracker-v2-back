@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: money-tracker-backend
+    runtime: docker
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        # Update this after deploying the frontend (see DEPLOY.md)
+        value: https://money-tracker-frontend.onrender.com
+      - key: DB_URL
+        fromDatabase:
+          name: moneytracker-db
+          property: connectionString
+      - key: DB_USER
+        fromDatabase:
+          name: moneytracker-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: moneytracker-db
+          property: password
+
+databases:
+  - name: moneytracker-db
+    databaseName: moneytracker
+    user: moneytracker
+    plan: free
