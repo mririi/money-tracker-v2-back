@@ -11,7 +11,7 @@ Set these in your Render Web Service dashboard:
 |----------|-------|---------|
 | `SPRING_PROFILES_ACTIVE` | `prod` | |
 | `JWT_SECRET` | Generate a strong random string | |
-| `CORS_ORIGINS` | Your frontend URL | `https://money-tracker-frontend.onrender.com` |
+| `CORS_ORIGINS` | Your frontend URL | `https://money-tracker-v2-front.onrender.com` |
 | `DB_URL` | JDBC URL to your Render Postgres | `jdbc:postgresql://dpg-xxx.frankfurt-postgres.render.com:5432/moneytracker_egdd?sslmode=require` |
 | `DB_USER` | Database username | `moneytracker` |
 | `DB_PASSWORD` | Database password | From Render dashboard |

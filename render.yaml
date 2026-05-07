@@ -9,8 +9,8 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGINS
-        # Update this after deploying the frontend
-        value: https://money-tracker-frontend.onrender.com
+        # Update if your frontend URL is different
+        value: https://money-tracker-v2-front.onrender.com
       # Database env vars — set these manually in Render Dashboard
       # DB_URL: jdbc:postgresql://HOST:5432/DB_NAME?sslmode=require
       # DB_USER: moneytracker
