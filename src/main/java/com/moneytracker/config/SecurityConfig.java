@@ -66,8 +66,15 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         if (allowedOrigins != null && !allowedOrigins.isBlank()) {
-            List<String> origins = Arrays.asList(allowedOrigins.split(","));
-            configuration.setAllowedOrigins(origins);
+            if ("*".equals(allowedOrigins.trim())) {
+                configuration.addAllowedOriginPattern("*");
+            } else {
+                List<String> origins = Arrays.asList(allowedOrigins.split(","));
+                configuration.setAllowedOrigins(origins);
+            }
+        } else {
+            // Fallback: allow localhost for development
+            configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:4202"));
         }
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
