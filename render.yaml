@@ -2,7 +2,7 @@ services:
   - type: web
     name: money-tracker-backend
     runtime: docker
-    # plan: starter  # Uncomment and set to your plan if needed
+    # plan: starter  # Uncomment and set to your Render plan
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
@@ -11,21 +11,7 @@ services:
       - key: CORS_ORIGINS
         # Update this after deploying the frontend
         value: https://money-tracker-frontend.onrender.com
-      - key: DB_URL
-        fromDatabase:
-          name: moneytracker-db
-          property: connectionString
-      - key: DB_USER
-        fromDatabase:
-          name: moneytracker-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: moneytracker-db
-          property: password
-
-databases:
-  - name: moneytracker-db
-    databaseName: moneytracker
-    user: moneytracker
-    plan: free
+      # Database env vars — set these manually in Render Dashboard
+      # DB_URL: jdbc:postgresql://HOST:5432/DB_NAME?sslmode=require
+      # DB_USER: moneytracker
+      # DB_PASSWORD: your-render-db-password

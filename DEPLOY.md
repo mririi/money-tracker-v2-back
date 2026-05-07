@@ -1,29 +1,33 @@
 # Deploy to Render
 
 ## Prerequisites
-- Render account (free tier works)
-
-## Step 1: Deploy via Blueprint
-1. Go to [Render Dashboard](https://dashboard.render.com)
-2. Click **New +** → **Blueprint**
-3. Connect your GitHub account and select `mririi/money-tracker-v2-back`
-4. Render will read `render.yaml` and create:
-   - A **Web Service** (`money-tracker-backend`) running the Docker container
-   - A **PostgreSQL database** (`moneytracker-db`) on the free plan
-5. Click **Apply**
-
-## Step 2: Note the Backend URL
-After deployment, copy the backend service URL (e.g. `https://money-tracker-backend.onrender.com`). You will need it for the frontend's `API_URL`.
-
-## Step 3: Update CORS (after frontend deploys)
-Once the frontend is deployed, update the `CORS_ORIGINS` environment variable in the backend service settings with the frontend URL, then redeploy.
+- PostgreSQL database created on Render (manual or via blueprint)
+- Render account
 
 ## Environment Variables
-| Variable | Source | Description |
-|----------|--------|-------------|
-| `SPRING_PROFILES_ACTIVE` | `render.yaml` | Set to `prod` |
-| `JWT_SECRET` | Auto-generated | Used for signing JWT tokens |
-| `CORS_ORIGINS` | Manual | Frontend URL (update after frontend deploy) |
-| `DB_URL` | From database | PostgreSQL connection string |
-| `DB_USER` | From database | PostgreSQL username |
-| `DB_PASSWORD` | From database | PostgreSQL password |
+Set these in your Render Web Service dashboard:
+
+| Variable | Value | Example |
+|----------|-------|---------|
+| `SPRING_PROFILES_ACTIVE` | `prod` | |
+| `JWT_SECRET` | Generate a strong random string | |
+| `CORS_ORIGINS` | Your frontend URL | `https://money-tracker-frontend.onrender.com` |
+| `DB_URL` | JDBC URL to your Render Postgres | `jdbc:postgresql://dpg-xxx.frankfurt-postgres.render.com:5432/moneytracker_egdd?sslmode=require` |
+| `DB_USER` | Database username | `moneytracker` |
+| `DB_PASSWORD` | Database password | From Render dashboard |
+
+> **Important:** Render PostgreSQL requires `?sslmode=require` at the end of the JDBC URL.
+
+## Deploy via Docker
+1. Go to [dashboard.render.com](https://dashboard.render.com)
+2. **New +** → **Web Service**
+3. Connect GitHub → select `mririi/money-tracker-v2-back`
+4. **Runtime:** Docker
+5. Set the environment variables above
+6. Click **Create Web Service**
+
+## Database Connection
+The backend uses the external database URL from Render. Make sure your JDBC URL follows this format:
+```
+jdbc:postgresql://YOUR_HOST.frankfurt-postgres.render.com:5432/YOUR_DB_NAME?sslmode=require
+```
