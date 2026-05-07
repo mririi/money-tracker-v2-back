@@ -11,6 +11,8 @@ services:
       - key: CORS_ORIGINS
         # Update if your frontend URL is different
         value: https://money-tracker-v2-front.onrender.com
+      - key: JAVA_OPTS
+        value: "-Xmx300m -Xms128m"
       # Database env vars — set these manually in Render Dashboard
       # DB_URL: jdbc:postgresql://HOST:5432/DB_NAME?sslmode=require
       # DB_USER: moneytracker

@@ -1,16 +1,8 @@
-# Stage 1: Build the JAR
-FROM maven:3.9-eclipse-temurin-21-alpine AS builder
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-COPY src ./src
-RUN mvn clean package -DskipTests -B
-
-# Stage 2: Run the application
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
-COPY --from=builder /app/target/*.jar app.jar
+COPY render/app.jar app.jar
 EXPOSE 8082
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENV JAVA_OPTS="-Xmx300m -Xms128m"
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
